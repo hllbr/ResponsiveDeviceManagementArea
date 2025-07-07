@@ -1,6 +1,6 @@
 import React from "react";
 
-function App() {
+const App: React.FC = () => {
   return (
     <div className="min-h-screen flex bg-gray-100">
       {/* Sidebar */}
@@ -52,6 +52,6 @@ function App() {
       </main>
     </div>
   );
-}
+};
 
-export default App;
+export default App; 
