@@ -23,27 +23,26 @@ const App: React.FC = () => {
         <main className="flex-1 flex flex-row gap-8">
           {/* Left Panel */}
           <section className="flex-1 flex flex-col gap-4">
-            {/* Device Image Placeholder */}
-            <div className="bg-pink-200 rounded-lg flex-1 min-h-[220px] flex items-center justify-center text-pink-900 font-semibold text-xl shadow">
-              Device Image Area
-            </div>
-
-            {/* 3 Small Boxes */}
-            <div className="flex flex-row gap-4 h-20">
-              <div className="flex-1 bg-green-200 rounded-lg flex items-center justify-center text-green-900 font-medium shadow">
-                DeviceScreen
-              </div>
-              <div className="flex-1 bg-yellow-200 rounded-lg flex items-center justify-center text-yellow-900 font-medium shadow">
-                DeviceActionButtonGroup
-              </div>
-              <div className="flex-1 bg-orange-200 rounded-lg flex items-center justify-center text-orange-900 font-medium shadow">
-                PhysicallyButtons
-              </div>
-            </div>
-
             {/* Device Header */}
             <div className="bg-indigo-200 rounded-lg h-12 flex items-center px-6 text-indigo-900 font-semibold text-lg shadow">
               DeviceHeader
+            </div>
+
+            {/* Device Image Area + ActionButtonGroup yan yana */}
+            <div className="flex flex-row gap-4 flex-1 min-h-[220px]">
+              <div className="bg-green-200 rounded-lg flex-1 flex items-center justify-center text-green-900 font-medium shadow">
+                DeviceScreen
+              </div>
+              <div className="bg-yellow-200 rounded-lg w-48 flex items-center justify-center text-yellow-900 font-medium shadow">
+                DeviceActionButtonGroup
+              </div>
+            </div>
+
+            {/* Alt kutu */}
+            <div className="flex flex-row gap-4 h-20">
+              <div className="flex-1 bg-orange-200 rounded-lg flex items-center justify-center text-orange-900 font-medium shadow">
+                PhysicallyButtons
+              </div>
             </div>
           </section>
 
