@@ -1,8 +1,18 @@
 import React from "react";
 
-const DeviceScreen: React.FC = () => (
-  <div className="bg-green-200 rounded-lg flex-1 flex items-center justify-center text-green-900 font-medium shadow">
-    DeviceScreen
+interface DeviceScreenProps {
+  isRotated: boolean;
+}
+
+const DeviceScreen: React.FC<DeviceScreenProps> = ({ isRotated }) => (
+  <div 
+    className={`bg-green-200 rounded-lg flex items-center justify-center text-green-900 font-medium shadow ${
+      isRotated 
+        ? 'w-full h-48' 
+        : 'w-full h-[600px]'
+    }`}
+  >
+    DeviceScreen {isRotated ? '(Yatay)' : '(Dikey)'}
   </div>
 );
 
