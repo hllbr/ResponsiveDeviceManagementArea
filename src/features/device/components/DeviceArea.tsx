@@ -21,7 +21,10 @@ const DeviceArea: React.FC = () => {
             <PhysicallyButtons />
           </div>
         </div>
-        <DeviceActionButtonGroup onRotate={handleRotate} />
+        {/* Cihaz Eylemleri sadece desktop'ta gösterilir */}
+        <div className="hidden lg:flex">
+          <DeviceActionButtonGroup onRotate={handleRotate} />
+        </div>
       </div>
     </section>
   );
