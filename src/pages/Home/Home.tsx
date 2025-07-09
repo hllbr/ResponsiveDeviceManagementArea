@@ -12,21 +12,21 @@ const Home: React.FC = () => {
   };
 
   return (
-    <div className="h-screen flex flex-row bg-gray-100 overflow-hidden">
+    <div className="min-h-screen flex flex-row bg-gray-100">
       <Sidebar />
       {/* Main Area (Header + Content) */}
-      <div className="flex-1 flex flex-col min-w-0 h-full">
+      <div className="flex-1 flex flex-col min-w-0">
         <div className="flex-shrink-0 px-4 lg:px-8 pt-4 lg:pt-8">
           <DeviceDetails />
         </div>
-        {/* Main Content Row - Scrollable */}
-        <main className="flex-1 flex flex-col xl:flex-row gap-4 lg:gap-8 px-4 lg:px-8 pb-4 lg:pb-8 overflow-auto">
+        {/* Main Content Row */}
+        <main className="flex flex-col xl:flex-row gap-8 px-4 lg:px-8 pb-4 lg:pb-8">
           {/* Sol Panel - Rotasyona göre hafif oransal değişim */}
           <div className={`${isRotated ? 'xl:flex-[6]' : 'xl:flex-[5]'} flex flex-col`}>
             <DeviceArea isRotated={isRotated} onRotate={handleRotate} />
           </div>
-          {/* Right Panel - Rotasyona göre hafif oransal değişim */}
-          <div className={`${isRotated ? 'xl:flex-[5]' : 'xl:flex-[6]'} flex flex-col`}>
+          {/* Right Panel - Rotasyona göre hafif oransal değişim - Sadece büyük ekranlarda */}
+          <div className={`${isRotated ? 'xl:flex-[5]' : 'xl:flex-[6]'} hidden md:flex flex-col`}>
             <RightPanel />
           </div>
         </main>

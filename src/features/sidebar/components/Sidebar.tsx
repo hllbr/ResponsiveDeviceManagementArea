@@ -1,7 +1,7 @@
 import React from "react";
 
 const Sidebar: React.FC = () => (
-  <aside className="bg-blue-200 w-[12vw] min-w-[48px] max-w-[72px] lg:w-[4vw] lg:min-w-[44px] lg:max-w-[56px] h-full flex-shrink-0 flex flex-col items-center py-4 lg:py-8 px-2 lg:px-0 shadow-lg">
+  <aside className="bg-blue-200 w-[12vw] min-w-[48px] max-w-[72px] lg:w-[4vw] lg:min-w-[44px] lg:max-w-[56px] min-h-screen sticky top-0 flex-shrink-0 flex flex-col items-center py-4 lg:py-8 px-2 lg:px-0 shadow-lg">
     <div className="w-4/5 h-32 lg:h-56 bg-blue-400 rounded-lg flex flex-col items-center justify-center text-blue-900 font-bold text-xs lg:text-lg mb-4">
       <div className="flex flex-col justify-center items-center">
         {"Sidebar".split("").map((char, idx) => (
