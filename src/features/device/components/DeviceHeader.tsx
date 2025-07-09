@@ -1,7 +1,7 @@
 import React from "react";
 
 const DeviceHeader: React.FC = () => (
-  <div className="bg-indigo-200 rounded-lg h-12 flex items-center px-6 text-indigo-900 font-semibold text-lg shadow">
+  <div className="bg-indigo-200 rounded-lg min-h-[48px] h-12 lg:h-14 w-full flex items-center px-4 lg:px-6 text-indigo-900 font-semibold text-base lg:text-lg shadow">
     DeviceHeader
   </div>
 );
