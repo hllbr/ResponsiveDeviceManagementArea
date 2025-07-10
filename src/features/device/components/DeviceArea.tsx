@@ -15,8 +15,8 @@ const DeviceArea: React.FC<DeviceAreaProps> = ({ isRotated, onRotate }) => {
     <section className="flex-1 flex flex-col gap-4 w-full ml-0">
       <DeviceHeader />
       <div className="flex flex-col lg:flex-row gap-2 lg:gap-4 flex-1 min-h-[50vh] lg:min-h-[220px]">
-        <div className="flex flex-col flex-1 justify-center items-center min-w-0">
-          <div className={`flex flex-col w-full ${isRotated ? 'max-w-[700px]' : 'max-w-[450px]'}`}>
+        <div className="flex flex-col flex-1 h-full items-stretch min-w-0">
+          <div className={`flex flex-col w-full h-full flex-1 ${isRotated ? '' : 'max-w-[450px] mx-auto'}`}>
             <DeviceScreen isRotated={isRotated} />
             <PhysicallyButtons isRotated={isRotated} />
           </div>
