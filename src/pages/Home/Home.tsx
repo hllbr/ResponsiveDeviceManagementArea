@@ -20,13 +20,13 @@ const Home: React.FC = () => {
           <DeviceDetails />
         </div>
         {/* Main Content Row */}
-        <main className="flex flex-col xl:flex-row gap-8 px-4 lg:px-8 pb-4 lg:pb-8">
+        <main className="flex flex-col xl:flex-row gap-8 px-4 lg:px-8 pb-4 lg:pb-8 flex-1 items-stretch h-full">
           {/* Sol Panel - Rotasyona göre hafif oransal değişim */}
-          <div className={`${isRotated ? 'xl:flex-[6]' : 'xl:flex-[5]'} flex flex-col`}>
+          <div className={`${isRotated ? 'xl:flex-[6]' : 'xl:flex-[5]'} flex flex-col h-full`}>
             <DeviceArea isRotated={isRotated} onRotate={handleRotate} />
           </div>
           {/* Right Panel - Rotasyona göre hafif oransal değişim - Sadece büyük ekranlarda */}
-          <div className={`${isRotated ? 'xl:flex-[5]' : 'xl:flex-[6]'} hidden md:flex flex-col`}>
+          <div className={`${isRotated ? 'xl:flex-[5]' : 'xl:flex-[6]'} hidden md:flex flex-col h-full`}>
             <RightPanel />
           </div>
         </main>
