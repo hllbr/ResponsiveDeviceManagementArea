@@ -714,3 +714,17 @@ Bu yapı, farklı ekran boyutlarında tutarlı kullanıcı deneyimi sağlayarak,
 
 ---
 **💡 Not**: Bu dokümantasyon projenin technical evolution'ını yansıtır ve yeni team member'ların onboarding sürecini hızlandırmak için tasarlanmıştır.
+
+
+
+graph TD
+  Parent["Cihazlar Alanı (Grid/Flex)"]
+  Parent --> Device1["Cihaz 1 (DeviceArea)"]
+  Parent --> Device2["Cihaz 2 (DeviceArea)"]
+  Parent --> Device3["Cihaz 3 (DeviceArea)"]
+  Device1 --> Screen1["DeviceScreen"]
+  Device1 --> Buttons1["PhysicallyButtons"]
+  Device2 --> Screen2["DeviceScreen"]
+  Device2 --> Buttons2["PhysicallyButtons"]
+  Device3 --> Screen3["DeviceScreen"]
+  Device3 --> Buttons3["PhysicallyButtons"]
