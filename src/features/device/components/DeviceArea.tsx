@@ -20,7 +20,7 @@ const DeviceArea: React.FC<DeviceAreaProps> = ({ isRotated, onRotate }) => {
           <PhysicallyButtons isRotated={isRotated} />
         </div>
         {/* Cihaz Eylemleri sadece desktop'ta gösterilir */}
-        <div className="hidden lg:flex flex-shrink-0 min-h-[380px] max-h-[680px]">
+        <div className="hidden lg:flex flex-shrink-0 min-h-[50vh] max-h-[80vh]">
           <DeviceActionButtonGroup onRotate={onRotate} />
         </div>
       </div>

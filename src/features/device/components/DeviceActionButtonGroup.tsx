@@ -9,7 +9,7 @@ const DeviceActionButtonGroup: React.FC<DeviceActionButtonGroupProps> = ({ onRot
     <h3 className="text-gray-700 font-medium text-sm mb-2">Cihaz Eylemleri</h3>
     <button
       onClick={onRotate}
-      className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center justify-center gap-2 transition-colors min-h-[44px]"
+      className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center justify-center gap-2 transition-colors min-h-[5vh]"
       aria-label="Ekranı döndür"
     >
       <svg
