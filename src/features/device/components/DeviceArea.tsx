@@ -12,9 +12,9 @@ interface DeviceAreaProps {
 const DeviceArea: React.FC<DeviceAreaProps> = ({ isRotated, onRotate }) => {
 
   return (
-    <section className="flex-1 flex flex-col gap-4 w-full ml-0">
+    <section className="flex-1 flex flex-col gap-4 w-full ml-0 max-w-[40vw] mx-auto">
       <DeviceHeader />
-      <div className="flex flex-col lg:flex-row gap-2 lg:gap-4 flex-1 min-h-[50vh] lg:min-h-[220px]">
+      <div className="flex flex-col lg:flex-row gap-2 lg:gap-4 flex-1 min-h-[50vh] lg:min-h-[25vh]">
         <div className="flex flex-col w-full h-full min-w-0">
           <DeviceScreen isRotated={isRotated} />
           <PhysicallyButtons isRotated={isRotated} />
