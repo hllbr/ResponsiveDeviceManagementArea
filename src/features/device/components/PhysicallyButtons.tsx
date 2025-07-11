@@ -7,8 +7,8 @@ interface PhysicallyButtonsProps {
 
 const PhysicallyButtons: React.FC<PhysicallyButtonsProps> = ({ width, isRotated = false }) => (
   <div
-    className={`bg-orange-200 rounded-lg flex items-center justify-center text-orange-900 font-medium shadow ${isRotated ? 'h-16' : 'h-20'}`}
-    style={{ width, maxWidth: '100%' }}
+    className={`bg-orange-200 rounded-lg flex items-center justify-center text-orange-900 font-medium shadow ${isRotated ? 'h-16' : 'h-20'} w-full`}
+    style={{ maxWidth: width }}
   >
     PhysicallyButtons
   </div>

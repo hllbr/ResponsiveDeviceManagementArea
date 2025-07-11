@@ -17,7 +17,10 @@ const DeviceArea: React.FC<DeviceAreaProps> = ({ device, isRotated, onRotate }) 
   const screenHeight = isRotated ? widthPx : heightPx;
 
   return (
-    <section className="flex-1 flex flex-col gap-4 mx-auto" style={{ width: screenWidth }}>
+    <section
+      className="flex-1 flex flex-col gap-4 mx-auto w-full"
+      style={{ maxWidth: screenWidth, minWidth: 200 }}
+    >
       <DeviceHeader device={device} />
       <div className="flex flex-col lg:flex-row gap-2 lg:gap-4 flex-1 items-stretch">
         <div className="flex flex-col items-center w-full h-full min-w-0">
