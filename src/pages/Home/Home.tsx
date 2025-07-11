@@ -7,6 +7,7 @@ import RightPanel from "../../features/device/components/RightPanel";
 const Home: React.FC = () => {
   const [isRotated, setIsRotated] = useState(false);
   const [deviceType, setDeviceType] = useState<"phone" | "tablet">("phone");
+  const [selectedDeviceSrc, setSelectedDeviceSrc] = useState<string>("/src/assets/halil.jpg");
 
   const handleRotate = () => {
     setIsRotated(!isRotated);
@@ -18,7 +19,7 @@ const Home: React.FC = () => {
 
   return (
     <div className="min-h-screen flex flex-row bg-gray-100">
-      <Sidebar />
+      <Sidebar onDeviceSelect={setSelectedDeviceSrc} />
       {/* Main Area (Header + Content) */}
       <div className="flex-1 flex flex-col min-w-0">
         <div className="flex-shrink-0 px-4 lg:px-8 pt-4 lg:pt-8">
@@ -28,7 +29,7 @@ const Home: React.FC = () => {
         <main className="flex flex-col xl:flex-row gap-8 px-4 lg:px-8 pb-4 lg:pb-8 flex-1 items-stretch h-full">
           {/* Sol Panel - Rotasyona göre hafif oransal değişim */}
           <div className={`${deviceAreaFlex} flex flex-col h-full`}>
-            <DeviceArea isRotated={isRotated} onRotate={handleRotate} deviceType={deviceType} onDeviceTypeChange={setDeviceType} />
+            <DeviceArea isRotated={isRotated} onRotate={handleRotate} deviceType={deviceType} onDeviceTypeChange={setDeviceType} src={selectedDeviceSrc} />
           </div>
           {/* Right Panel - Rotasyona göre hafif oransal değişim - Sadece büyük ekranlarda */}
           <div className={`${rightPanelFlex} hidden md:flex flex-col h-full`}>
