@@ -6,11 +6,16 @@ import RightPanel from "../../features/device/components/RightPanel";
 
 const Home: React.FC = () => {
   const [isRotated, setIsRotated] = useState(false);
+  const [deviceType, setDeviceType] = useState<"phone" | "tablet">("phone");
 
   const handleRotate = () => {
     setIsRotated(!isRotated);
   };
-  //HOME
+
+  // DeviceArea ve RightPanel oranlarını deviceType'a göre ayarla
+  const deviceAreaFlex = deviceType === "tablet" ? (isRotated ? "xl:flex-[8]" : "xl:flex-[7]") : (isRotated ? "xl:flex-[6]" : "xl:flex-[5]");
+  const rightPanelFlex = deviceType === "tablet" ? (isRotated ? "xl:flex-[4]" : "xl:flex-[5]") : (isRotated ? "xl:flex-[5]" : "xl:flex-[6]");
+
   return (
     <div className="min-h-screen flex flex-row bg-gray-100">
       <Sidebar />
@@ -22,11 +27,11 @@ const Home: React.FC = () => {
         {/* Main Content Row */}
         <main className="flex flex-col xl:flex-row gap-8 px-4 lg:px-8 pb-4 lg:pb-8 flex-1 items-stretch h-full">
           {/* Sol Panel - Rotasyona göre hafif oransal değişim */}
-          <div className={`${isRotated ? 'xl:flex-[6]' : 'xl:flex-[5]'} flex flex-col h-full`}>
-            <DeviceArea isRotated={isRotated} onRotate={handleRotate} />
+          <div className={`${deviceAreaFlex} flex flex-col h-full`}>
+            <DeviceArea isRotated={isRotated} onRotate={handleRotate} deviceType={deviceType} onDeviceTypeChange={setDeviceType} />
           </div>
           {/* Right Panel - Rotasyona göre hafif oransal değişim - Sadece büyük ekranlarda */}
-          <div className={`${isRotated ? 'xl:flex-[5]' : 'xl:flex-[6]'} hidden md:flex flex-col h-full`}>
+          <div className={`${rightPanelFlex} hidden md:flex flex-col h-full`}>
             <RightPanel />
           </div>
         </main>
