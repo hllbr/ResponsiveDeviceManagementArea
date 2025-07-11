@@ -1,15 +1,17 @@
 import React from "react";
 
 interface PhysicallyButtonsProps {
+  width: number;
   isRotated?: boolean;
 }
 
-const PhysicallyButtons: React.FC<PhysicallyButtonsProps> = ({ isRotated = false }) => (
-  <div className={`bg-orange-200 rounded-lg w-full flex items-center justify-center text-orange-900 font-medium shadow ${
-    isRotated ? 'h-16 min-h-[6vh] max-h-[7vh]' : 'h-20 min-h-[7vh] max-h-[9vh]'
-  }`}>
+const PhysicallyButtons: React.FC<PhysicallyButtonsProps> = ({ width, isRotated = false }) => (
+  <div
+    className={`bg-orange-200 rounded-lg flex items-center justify-center text-orange-900 font-medium shadow ${isRotated ? 'h-16' : 'h-20'}`}
+    style={{ width, maxWidth: '100%' }}
+  >
     PhysicallyButtons
   </div>
 );
 
-export default PhysicallyButtons; 
+export default PhysicallyButtons;

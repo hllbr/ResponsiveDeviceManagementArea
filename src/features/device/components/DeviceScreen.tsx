@@ -1,19 +1,17 @@
 import React from "react";
 
 interface DeviceScreenProps {
-  isRotated: boolean;
+  width: number;
+  height: number;
 }
 
-const DeviceScreen: React.FC<DeviceScreenProps> = ({ isRotated }) => (
-  <div 
-    className={`bg-green-200 rounded-lg flex items-center justify-center text-green-900 font-medium shadow w-full ${
-      isRotated 
-        ? 'aspect-[16/9] min-w-[30vw] max-w-[40vw] h-auto' 
-        : 'aspect-[9/16] min-h-[40vh] max-h-[70vh]'
-    }`}
+const DeviceScreen: React.FC<DeviceScreenProps> = ({ width, height }) => (
+  <div
+    className="bg-green-200 rounded-lg flex items-center justify-center text-green-900 font-medium shadow"
+    style={{ width, height, maxWidth: '100%', maxHeight: '80vh' }}
   >
-    DeviceScreen {isRotated ? '(Yatay)' : '(Dikey)'}
+    DeviceScreen
   </div>
 );
 
-export default DeviceScreen; 
+export default DeviceScreen;
