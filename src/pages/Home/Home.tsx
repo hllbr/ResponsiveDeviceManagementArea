@@ -10,7 +10,7 @@ const Home: React.FC = () => {
   const handleRotate = () => {
     setIsRotated(!isRotated);
   };
-
+  //HOME
   return (
     <div className="min-h-screen flex flex-row bg-gray-100">
       <Sidebar />
