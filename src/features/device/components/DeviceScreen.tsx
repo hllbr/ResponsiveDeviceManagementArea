@@ -64,7 +64,7 @@ const DeviceScreen: React.FC<DeviceScreenProps> = ({
         ref={imgRef}
         src={src}
         alt="Telefon"
-        className={`object-contain rounded-lg transition-transform duration-300 ${deviceType === 'tablet' && isRotated ? 'w-full h-full' : 'max-w-full max-h-full'} ${
+        className={`block object-contain rounded-lg transition-transform duration-300 ${deviceType === 'tablet' && isRotated ? 'w-full h-full' : 'max-w-full max-h-full'} ${
           isRotated ? "rotate-90" : ""
         }`}
         style={{ aspectRatio }}
