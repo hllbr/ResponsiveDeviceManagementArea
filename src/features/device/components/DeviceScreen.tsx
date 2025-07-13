@@ -16,12 +16,14 @@ const DeviceScreen: React.FC<DeviceScreenProps> = ({
   const [deviceType, setDeviceType] = React.useState<"phone" | "tablet">(
     "phone"
   );
+  const [imageSize, setImageSize] = React.useState<{ width: number; height: number } | null>(null);
 
   // Görsel yüklendiğinde oranı kontrol et
   const handleImageLoad = () => {
     if (imgRef.current) {
       const img = imgRef.current;
       const ratio = img.naturalWidth / img.naturalHeight;
+      setImageSize({ width: img.naturalWidth, height: img.naturalHeight });
       let type: "phone" | "tablet" = "phone";
       // Eğer src'de 'diktel' geçiyorsa tablet olarak işaretle
       if (src && src.toLowerCase().includes("diktel")) {
@@ -40,9 +42,13 @@ const DeviceScreen: React.FC<DeviceScreenProps> = ({
     }
   };
 
-  // Aspect-ratio'yu cihaz tipine ve rotasyona göre ayarla
+  // Aspect-ratio'yu görsel boyutlarına ve rotasyona göre ayarla
   let aspectRatio;
-  if (deviceType === "tablet") {
+  if (imageSize) {
+    aspectRatio = isRotated
+      ? `${imageSize.height}/${imageSize.width}`
+      : `${imageSize.width}/${imageSize.height}`;
+  } else if (deviceType === "tablet") {
     aspectRatio = isRotated ? "16/9" : "4/3";
   } else {
     aspectRatio = isRotated ? "10/9" : "9/16";
