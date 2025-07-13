@@ -5,10 +5,9 @@ interface SidebarProps {
 }
 
 const deviceIcons = [
-  { src: '/src/assets/tablet.jpg', label: 'Tablet' },
   { src: '/src/assets/phone.jpg', label: 'Phone' },
-  { src: '/src/assets/halil.jpg', label: 'Halil' },
   { src: '/src/assets/device1.jpg', label: 'Device1' },
+  { src: '/src/assets/diktel.jpg', label: 'Diktel' },
 ];
 
 const Sidebar: React.FC<SidebarProps> = ({ onDeviceSelect }) => (

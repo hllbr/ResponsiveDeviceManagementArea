@@ -7,7 +7,7 @@ import RightPanel from "../../features/device/components/RightPanel";
 const Home: React.FC = () => {
   const [isRotated, setIsRotated] = useState(false);
   const [deviceType, setDeviceType] = useState<"phone" | "tablet">("phone");
-  const [selectedDeviceSrc, setSelectedDeviceSrc] = useState<string>("/src/assets/halil.jpg");
+  const [selectedDeviceSrc, setSelectedDeviceSrc] = useState<string>("/src/assets/diktel.jpg");
 
   const handleRotate = () => {
     setIsRotated(!isRotated);

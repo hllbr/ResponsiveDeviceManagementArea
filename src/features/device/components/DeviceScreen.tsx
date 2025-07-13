@@ -9,7 +9,7 @@ interface DeviceScreenProps {
 
 const DeviceScreen: React.FC<DeviceScreenProps> = ({
   isRotated,
-  src = "/src/assets/halil.jpg",
+  src = "/src/assets/diktel.jpg",
   onDeviceTypeChange,
 }) => {
   const imgRef = React.useRef<HTMLImageElement>(null);
@@ -36,7 +36,11 @@ const DeviceScreen: React.FC<DeviceScreenProps> = ({
       const img = imgRef.current;
       const ratio = img.naturalWidth / img.naturalHeight;
       let type: "phone" | "tablet" = "phone";
-      if (ratio > 0.9) {
+      // Eğer src'de 'diktel' geçiyorsa tablet olarak işaretle
+      if (src && src.toLowerCase().includes("diktel")) {
+        type = "tablet";
+        setDeviceType("tablet");
+      } else if (ratio > 0.9) {
         type = "tablet";
         setDeviceType("tablet");
       } else {
@@ -52,13 +56,13 @@ const DeviceScreen: React.FC<DeviceScreenProps> = ({
   // Aspect-ratio'yu cihaz tipine ve rotasyona göre ayarla
   let aspectRatio;
   if (deviceType === "tablet") {
-    aspectRatio = isRotated ? "4/3" : "4/3";
+    aspectRatio = isRotated ? "16/9" : "4/3";
   } else {
     aspectRatio = isRotated ? "10/9" : "9/16";
   }
 
   return (
-    <div className="flex flex-col items-center w-auto h-full">
+    <div className={`flex flex-col items-center ${deviceType === 'tablet' && isRotated ? 'w-full h-full' : 'w-auto h-full'}`}>
       {/* rotate ve dik oarlak sınırlandıralabilir. max ve min değerleri değiştirilebilir. 
       
       birden fazla cihaz olduğ senaryoda cihazların max ve minle stoplamış olucaz.
@@ -67,13 +71,13 @@ const DeviceScreen: React.FC<DeviceScreenProps> = ({
         ref={imgRef}
         src={src}
         alt="Telefon"
-        className={`object-contain rounded-lg transition-transform duration-300 max-w-full max-h-full ${
+        className={`object-contain rounded-lg transition-transform duration-300 ${deviceType === 'tablet' && isRotated ? 'w-full h-full' : 'max-w-full max-h-full'} ${
           isRotated ? "rotate-90" : ""
         }`}
         style={{ aspectRatio }}
         onLoad={handleImageLoad}
       />
-      <PhysicallyButtons isRotated={isRotated} width={imgWidth} />
+      <PhysicallyButtons isRotated={isRotated} width={deviceType === 'tablet' && isRotated ? undefined : imgWidth} deviceType={deviceType} />
     </div>
   );
 };
