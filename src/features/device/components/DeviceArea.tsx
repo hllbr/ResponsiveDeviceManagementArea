@@ -1,7 +1,6 @@
 import React from "react";
 import DeviceHeader from "./DeviceHeader";
 import DeviceScreen from "./DeviceScreen";
-import PhysicallyButtons from "./PhysicallyButtons";
 import DeviceActionButtonGroup from "./DeviceActionButtonGroup";
 
 interface DeviceAreaProps {
@@ -13,10 +12,6 @@ interface DeviceAreaProps {
 }
 
 const DeviceArea: React.FC<DeviceAreaProps> = ({ isRotated, onRotate, src, deviceType, onDeviceTypeChange }) => {
-  // DeviceArea ve RightPanel oranlarını deviceType'a göre ayarla
-  const deviceAreaFlex = deviceType === "tablet" ? (isRotated ? "xl:flex-[8]" : "xl:flex-[7]") : (isRotated ? "xl:flex-[6]" : "xl:flex-[5]");
-  const rightPanelFlex = deviceType === "tablet" ? (isRotated ? "xl:flex-[4]" : "xl:flex-[5]") : (isRotated ? "xl:flex-[5]" : "xl:flex-[6]");
-
   return (
     <section className={`flex-1 flex flex-col gap-4 w-full ml-0 mx-auto ${
       deviceType === 'tablet'

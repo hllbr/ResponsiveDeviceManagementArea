@@ -1,5 +1,3 @@
-import React from "react";
-
 interface SidebarProps {
   onDeviceSelect?: (src: string) => void;
 }

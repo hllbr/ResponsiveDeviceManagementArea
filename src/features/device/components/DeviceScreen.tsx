@@ -13,26 +13,13 @@ const DeviceScreen: React.FC<DeviceScreenProps> = ({
   onDeviceTypeChange,
 }) => {
   const imgRef = React.useRef<HTMLImageElement>(null);
-  const [imgWidth, setImgWidth] = React.useState<number | undefined>(undefined);
   const [deviceType, setDeviceType] = React.useState<"phone" | "tablet">(
     "phone"
   );
 
-  React.useEffect(() => {
-    const handleWidth = () => {
-      if (imgRef.current) {
-        setImgWidth(imgRef.current.clientWidth);
-      }
-    };
-    handleWidth();
-    window.addEventListener("resize", handleWidth);
-    return () => window.removeEventListener("resize", handleWidth);
-  }, [isRotated, src]);
-
   // Görsel yüklendiğinde oranı kontrol et
   const handleImageLoad = () => {
     if (imgRef.current) {
-      setImgWidth(imgRef.current.clientWidth);
       const img = imgRef.current;
       const ratio = img.naturalWidth / img.naturalHeight;
       let type: "phone" | "tablet" = "phone";
@@ -77,7 +64,7 @@ const DeviceScreen: React.FC<DeviceScreenProps> = ({
         style={{ aspectRatio }}
         onLoad={handleImageLoad}
       />
-      <PhysicallyButtons isRotated={isRotated}  />
+      <PhysicallyButtons />
     </div>
   );
 };
