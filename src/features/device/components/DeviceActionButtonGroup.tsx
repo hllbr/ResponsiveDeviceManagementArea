@@ -4,9 +4,10 @@ interface DeviceActionButtonGroupProps {
   onRotate: () => void;
 }
 
-const DeviceActionButtonGroup: React.FC<DeviceActionButtonGroupProps> = ({ onRotate }) => (
-  <div className="bg-yellow-200 rounded-lg w-full lg:w-48 min-w-[12vw] max-w-[16vw] lg:max-w-[14vw] p-4 flex flex-col gap-3 shadow h-full flex-col">
-    <h3 className="text-gray-700 font-medium text-sm mb-2">Cihaz Eylemleri</h3>
+const DeviceActionButtonGroup: React.FC<DeviceActionButtonGroupProps> = ({
+  onRotate,
+}) => (
+  <div className="bg-yellow-200 rounded-lg p-4 flex flex-col gap-3 shadow h-full flex-col">
     <button
       onClick={onRotate}
       className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center justify-center gap-2 transition-colors min-h-[5vh]"
@@ -25,9 +26,8 @@ const DeviceActionButtonGroup: React.FC<DeviceActionButtonGroupProps> = ({ onRot
           fill="currentColor"
         />
       </svg>
-      <span className="text-sm lg:text-base">Döndür</span>
     </button>
   </div>
 );
 
-export default DeviceActionButtonGroup; 
+export default DeviceActionButtonGroup;
