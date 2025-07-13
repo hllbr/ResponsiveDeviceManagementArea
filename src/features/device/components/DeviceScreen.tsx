@@ -77,7 +77,7 @@ const DeviceScreen: React.FC<DeviceScreenProps> = ({
         style={{ aspectRatio }}
         onLoad={handleImageLoad}
       />
-      <PhysicallyButtons isRotated={isRotated} width={deviceType === 'tablet' && isRotated ? undefined : imgWidth} deviceType={deviceType} />
+      <PhysicallyButtons isRotated={isRotated}  />
     </div>
   );
 };
