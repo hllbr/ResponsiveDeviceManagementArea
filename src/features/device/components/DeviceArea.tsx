@@ -25,7 +25,7 @@ const DeviceArea: React.FC<DeviceAreaProps> = ({ isRotated, onRotate, src, devic
             ? 'w-full h-full min-w-0 max-w-full'
             : isRotated
               ? 'aspect-[16/9] min-w-[30vw] max-w-[40vw] h-auto'
-              : 'aspect-[9/16] min-h-[40vh] max-h-[70vh]'
+              : 'aspect-[9/16] min-h-[60vh] max-h-[70vh]'
         }`} style={{ flex: 1 }}>
           <DeviceScreen isRotated={isRotated} src={src} onDeviceTypeChange={onDeviceTypeChange} />
         </div>
