@@ -54,11 +54,12 @@ const DeviceScreen: React.FC<DeviceScreenProps> = ({
       
       birden fazla cihaz olduğ senaryoda cihazların max ve minle stoplamış olucaz.
       */}
+        {/* yükseklik genişlik oluyor genişlik ise yükseklik olarka uygulanıyor tablet totate  olunca imgiçerisinde       */}  
       <img
         ref={imgRef}
         src={src}
         alt="Telefon"
-        className={`object-contain rounded-lg transition-transform duration-300 ${deviceType === 'tablet' && isRotated ? 'w-full h-full' : 'max-w-full max-h-full'} ${
+        className={`object-contain rounded-lg transition-transform duration-300 ${deviceType === 'tablet' && isRotated ? 'h-[100vh] w-[90vh] item-start  object-fill' : 'max-w-full max-h-full'} ${
           isRotated ? "rotate-90" : ""
         }`}
         style={{ aspectRatio }}
