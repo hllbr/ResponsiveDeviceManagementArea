@@ -42,11 +42,7 @@ const DeviceArea: React.FC<DeviceAreaProps> = ({
           }`}
           style={{ flex: 1 }}
         >
-          <DeviceScreen
-            isRotated={isRotated}
-            src={src}
-            onDeviceTypeChange={onDeviceTypeChange}
-          />
+          <DeviceScreen isRotated={isRotated} src={src} />
         </div>
         {/* Cihaz Eylemleri sadece desktop'ta gösterilir */}
         <div className="hidden lg:flex flex-shrink-0 min-h-[50vh] max-h-[80vh] h-full">

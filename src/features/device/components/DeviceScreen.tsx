@@ -5,18 +5,9 @@ interface DeviceScreenProps {
   isRotated: boolean;
   /** Her boyutta ve herhangi bir kaynaktan gelebilecek cihaz resmi */
   src: string;
-  /**
-   * Kullanıcının tıkladığı/noktaya bastığı yeri
-   * [0,1] aralığında normalize edilmiş { x, y } ile bildirir
-   */
-  onPointerClick?: (coords: { x: number; y: number }) => void;
 }
 
-const DeviceScreen: React.FC<DeviceScreenProps> = ({
-  isRotated,
-  src,
-  onPointerClick,
-}) => {
+const DeviceScreen: React.FC<DeviceScreenProps> = ({ isRotated, src }) => {
   const imgRef = useRef<HTMLImageElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
 
@@ -49,20 +40,6 @@ const DeviceScreen: React.FC<DeviceScreenProps> = ({
     setDimensions({ width, height });
   }, [isRotated]);
 
-  // Tıklamayı wrapper boyutuna göre [0,1] normalize eder
-  const normalizePointer = useCallback((evt: React.MouseEvent) => {
-    const wrap = wrapperRef.current;
-    if (!wrap) return { x: -1, y: -1 };
-    const rect = wrap.getBoundingClientRect();
-    const x = (evt.clientX - rect.left) / rect.width;
-    const y = (evt.clientY - rect.top) / rect.height;
-    return { x: Math.min(Math.max(x, 0), 1), y: Math.min(Math.max(y, 0), 1) };
-  }, []);
-
-  const handleClick = (evt: React.MouseEvent) => {
-    if (onPointerClick) onPointerClick(normalizePointer(evt));
-  };
-
   useEffect(() => {
     calculateDimensions();
     window.addEventListener("resize", calculateDimensions);
@@ -86,7 +63,6 @@ const DeviceScreen: React.FC<DeviceScreenProps> = ({
   return (
     <div
       ref={wrapperRef}
-      onClick={handleClick}
       className="flex items-center justify-center overflow-hidden"
       style={wrapperStyle}
     >
