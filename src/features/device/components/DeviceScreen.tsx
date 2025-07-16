@@ -39,6 +39,9 @@ const DeviceScreen: React.FC<DeviceScreenProps> = ({
       }
     }
   };
+//gelen resimlerin oranlarına göre hesaplatacağız.
+
+  
 
   // Aspect-ratio'yu cihaz tipine ve rotasyona göre ayarla
   let aspectRatio;
@@ -47,21 +50,28 @@ const DeviceScreen: React.FC<DeviceScreenProps> = ({
   } else {
     aspectRatio = isRotated ? "10/9" : "9/16";
   }
+  //dinamic aspect ratio olacak şekilde revize edilecek.
 
   return (
-    <div className={`flex flex-col items-center ${deviceType === 'tablet' && isRotated ? 'w-full h-full' : 'w-auto h-full'}`}>
+    <div
+      className={`flex flex-col items-center ${
+        deviceType === "tablet" && isRotated ? "w-full h-full" : "w-auto h-full"
+      }`}
+    >
       {/* rotate ve dik oarlak sınırlandıralabilir. max ve min değerleri değiştirilebilir. 
       
       birden fazla cihaz olduğ senaryoda cihazların max ve minle stoplamış olucaz.
       */}
-        {/* yükseklik genişlik oluyor genişlik ise yükseklik olarka uygulanıyor tablet totate  olunca imgiçerisinde       */}  
+      {/* yükseklik genişlik oluyor genişlik ise yükseklik olarka uygulanıyor tablet totate  olunca imgiçerisinde       */}
       <img
         ref={imgRef}
         src={src}
         alt="Telefon"
-        className={`object-contain rounded-lg transition-transform duration-300 ${deviceType === 'tablet' && isRotated ? 'h-[100vh] w-[90vh] item-start  object-fill' : 'max-w-full max-h-full'} ${
-          isRotated ? "rotate-90" : ""
-        }`}
+        className={`object-contain rounded-lg transition-transform duration-300 ${
+          deviceType === "tablet" && isRotated
+            ? "h-full w-full item-start  object-fill"
+            : "max-w-full max-h-full"
+        } ${isRotated ? "rotate-90" : ""}`}
         style={{ aspectRatio }}
         onLoad={handleImageLoad}
       />
