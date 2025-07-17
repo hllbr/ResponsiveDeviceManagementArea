@@ -5,7 +5,7 @@ interface DeviceActionButtonGroupProps {
 const DeviceActionButtonGroup: React.FC<DeviceActionButtonGroupProps> = ({
   onRotate,
 }) => (
-  <div className="bg-yellow-200 rounded-lg p-4 flex flex-col gap-3 shadow h-full flex-col">
+  <div className="bg-yellow-200 rounded-lg p-4 grid gap-3 shadow h-full">
     <button
       onClick={onRotate}
       className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center justify-center gap-2 transition-colors min-h-[5vh]"

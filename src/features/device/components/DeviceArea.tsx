@@ -19,35 +19,13 @@ const DeviceArea: React.FC<DeviceAreaProps> = ({
   onDeviceTypeChange,
 }) => {
   return (
-    <section
-      className={`flex-1 flex flex-col gap-4 w-full ml-0 mx-auto ${
-        deviceType === "tablet"
-          ? isRotated
-            ? "max-w-[40vw]"
-            : "max-w-[50vw]"
-          : isRotated
-          ? "max-h-[60vw]"
-          : "max-w-[40vw]"
-      }`}
-    >
+    <section className="w-full h-full grid grid-rows-[auto_1fr] gap-4 p-4">
+      {/* En üstte Header */}
       <DeviceHeader />
-      <div className="flex flex-col lg:flex-row gap-2 lg:gap-4 flex-1 min-h-[50vh] lg:min-h-[25vh] h-full items-stretch">
-        <div
-          className={`flex flex-col items-start w-full h-full min-w-0 ${
-            deviceType === "tablet" && isRotated
-              ? "w-full h-full min-w-0 max-w-full"
-              : isRotated
-              ? "aspect-[16/9] min-w-[30vw] max-w-[40vw] h-auto"
-              : "aspect-[9/16] min-h-[60vh] max-h-[70vh]"
-          }`}
-          style={{ flex: 1 }}
-        >
-          <DeviceScreen isRotated={isRotated} src={src} />
-        </div>
-        {/* Cihaz Eylemleri sadece desktop'ta gösterilir */}
-        <div className="hidden lg:flex flex-shrink-0 min-h-[50vh] max-h-[80vh] h-full">
-          <DeviceActionButtonGroup onRotate={onRotate} />
-        </div>
+      {/* Altında iki kolonlu grid: DeviceScreen | DeviceActionButtonGroup */}
+      <div className="w-full h-full grid grid-cols-[1fr_auto] gap-4 items-start">
+        <DeviceScreen isRotated={isRotated} src={src} />
+        <DeviceActionButtonGroup onRotate={onRotate} />
       </div>
     </section>
   );
