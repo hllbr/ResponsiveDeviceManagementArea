@@ -11,7 +11,7 @@ const DeviceActionButtonGroup: React.FC<DeviceActionButtonGroupProps> = ({
     className={
       isRotated
         ? "bg-yellow-200 rounded-lg p-2 grid gap-3 shadow w-full h-[60px] place-items-center"
-        : "bg-yellow-200 rounded-lg p-2 grid gap-3 shadow w-[60px] h-[70vh] place-items-center"
+        : "bg-yellow-200 rounded-lg p-2 grid gap-3 shadow w-[60px] h-full place-items-center"
     }
   >
     <button
