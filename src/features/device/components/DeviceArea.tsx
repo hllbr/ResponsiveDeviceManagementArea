@@ -54,7 +54,7 @@ const DeviceArea: React.FC<DeviceAreaProps> = ({
                 src={src as string}
                 onWidthChange={setScreenWidth}
               />
-              <div style={{ width: screenWidth }} className="mt-2">
+              <div style={{ width: screenWidth }}>
                 <PhysicallyButtons width={screenWidth} />
               </div>
             </div>
@@ -73,7 +73,7 @@ const DeviceArea: React.FC<DeviceAreaProps> = ({
                 src={src as string}
                 onWidthChange={setScreenWidth}
               />
-              <div style={{ width: screenWidth }} className="mt-2">
+              <div style={{ width: screenWidth }}>
                 <PhysicallyButtons width={screenWidth} />
               </div>
             </div>
