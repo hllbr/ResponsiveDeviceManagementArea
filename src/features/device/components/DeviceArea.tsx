@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useRef, useState, useEffect } from "react";
 import DeviceHeader from "./DeviceHeader";
 import DeviceScreen from "./DeviceScreen";
 import DeviceActionButtonGroup from "./DeviceActionButtonGroup";
+import PhysicallyButtons from "./PhysicallyButtons";
 
 interface DeviceAreaProps {
   isRotated: boolean;
@@ -18,6 +19,15 @@ const DeviceArea: React.FC<DeviceAreaProps> = ({
   deviceType,
   onDeviceTypeChange,
 }) => {
+  const screenWrapperRef = useRef<HTMLDivElement>(null);
+  const [screenWidth, setScreenWidth] = useState<number | undefined>(undefined);
+
+  useEffect(() => {
+    if (screenWrapperRef.current) {
+      setScreenWidth(screenWrapperRef.current.offsetWidth);
+    }
+  }, [isRotated, src]);
+
   return (
     <section className="h-full ">
       <div
@@ -38,8 +48,15 @@ const DeviceArea: React.FC<DeviceAreaProps> = ({
         {/* Ekran ve butonlar: yatayda alt alta, dikeyde yan yana */}
         {isRotated ? (
           <>
-            <div className="w-full flex justify-center">
-              <DeviceScreen isRotated={isRotated} src={src as string} />
+            <div className="w-full flex flex-col items-center">
+              <DeviceScreen
+                isRotated={isRotated}
+                src={src as string}
+                onWidthChange={setScreenWidth}
+              />
+              <div style={{ width: screenWidth }} className="mt-2">
+                <PhysicallyButtons width={screenWidth} />
+              </div>
             </div>
             <div className="w-full flex justify-center">
               <DeviceActionButtonGroup
@@ -50,7 +67,16 @@ const DeviceArea: React.FC<DeviceAreaProps> = ({
           </>
         ) : (
           <>
-            <DeviceScreen isRotated={isRotated} src={src as string} />
+            <div className="flex flex-col items-center w-full">
+              <DeviceScreen
+                isRotated={isRotated}
+                src={src as string}
+                onWidthChange={setScreenWidth}
+              />
+              <div style={{ width: screenWidth }} className="mt-2">
+                <PhysicallyButtons width={screenWidth} />
+              </div>
+            </div>
             <DeviceActionButtonGroup
               onRotate={onRotate}
               isRotated={isRotated}

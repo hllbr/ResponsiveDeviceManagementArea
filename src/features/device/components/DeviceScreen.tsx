@@ -5,9 +5,14 @@ interface DeviceScreenProps {
   isRotated: boolean;
   /** Her boyutta ve herhangi bir kaynaktan gelebilecek cihaz resmi */
   src: string;
+  onWidthChange?: (width: number) => void;
 }
 
-const DeviceScreen: React.FC<DeviceScreenProps> = ({ isRotated, src }) => {
+const DeviceScreen: React.FC<DeviceScreenProps> = ({
+  isRotated,
+  src,
+  onWidthChange,
+}) => {
   const imgRef = useRef<HTMLImageElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
 
@@ -45,6 +50,12 @@ const DeviceScreen: React.FC<DeviceScreenProps> = ({ isRotated, src }) => {
     window.addEventListener("resize", calculateDimensions);
     return () => window.removeEventListener("resize", calculateDimensions);
   }, [calculateDimensions, src, isRotated]);
+
+  useEffect(() => {
+    if (onWidthChange) {
+      onWidthChange(isRotated ? dimensions.height : dimensions.width);
+    }
+  }, [dimensions, isRotated, onWidthChange]);
 
   // Wrapper’da döndürme durumuna göre en-boy takası
   const wrapperStyle = {
