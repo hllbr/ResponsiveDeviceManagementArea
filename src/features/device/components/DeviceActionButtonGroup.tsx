@@ -5,10 +5,10 @@ interface DeviceActionButtonGroupProps {
 const DeviceActionButtonGroup: React.FC<DeviceActionButtonGroupProps> = ({
   onRotate,
 }) => (
-  <div className="bg-yellow-200 rounded-lg p-4 grid gap-3 shadow h-full">
+  <div className="bg-yellow-200 rounded-lg p-2 grid gap-3 shadow w-[60px] h-[70vh] place-items-center">
     <button
       onClick={onRotate}
-      className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center justify-center gap-2 transition-colors min-h-[5vh]"
+      className="bg-blue-500 hover:bg-blue-600 text-white w-[40px] h-[40px] rounded-full flex items-center justify-center transition-colors"
       aria-label="Ekranı döndür"
     >
       <svg

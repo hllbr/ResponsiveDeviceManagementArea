@@ -19,12 +19,14 @@ const DeviceArea: React.FC<DeviceAreaProps> = ({
   onDeviceTypeChange,
 }) => {
   return (
-    <section className="w-full h-full grid grid-rows-[auto_1fr] gap-4 p-4">
-      {/* En üstte Header */}
-      <DeviceHeader />
-      {/* Altında iki kolonlu grid: DeviceScreen | DeviceActionButtonGroup */}
-      <div className="w-full h-full grid grid-cols-[1fr_auto] gap-4 items-start">
-        <DeviceScreen isRotated={isRotated} src={src} />
+    <section className="h-full ">
+      <div className="grid grid-rows-[auto_1fr] grid-cols-[auto_auto] gap-y-4 gap-x-2 items-center w-fit max-w-full">
+        {/* Header, iki kolonun toplamı kadar genişlikte */}
+        <div className="col-span-2 w-full">
+          <DeviceHeader />
+        </div>
+        {/* Altında iki kolonlu grid: DeviceScreen | DeviceActionButtonGroup */}
+        <DeviceScreen isRotated={isRotated} src={src as string} />
         <DeviceActionButtonGroup onRotate={onRotate} />
       </div>
     </section>
