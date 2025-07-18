@@ -1,11 +1,19 @@
 interface DeviceActionButtonGroupProps {
   onRotate: () => void;
+  isRotated?: boolean;
 }
 
 const DeviceActionButtonGroup: React.FC<DeviceActionButtonGroupProps> = ({
   onRotate,
+  isRotated = false,
 }) => (
-  <div className="bg-yellow-200 rounded-lg p-2 grid gap-3 shadow w-[60px] h-[70vh] place-items-center">
+  <div
+    className={
+      isRotated
+        ? "bg-yellow-200 rounded-lg p-2 grid gap-3 shadow w-full h-[60px] place-items-center"
+        : "bg-yellow-200 rounded-lg p-2 grid gap-3 shadow w-[60px] h-[70vh] place-items-center"
+    }
+  >
     <button
       onClick={onRotate}
       className="bg-blue-500 hover:bg-blue-600 text-white w-[40px] h-[40px] rounded-full flex items-center justify-center transition-colors"
