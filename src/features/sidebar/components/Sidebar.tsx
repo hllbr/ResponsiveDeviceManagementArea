@@ -3,9 +3,11 @@ interface SidebarProps {
 }
 
 const deviceIcons = [
-  { src: '/src/assets/phone.jpg', label: 'Phone' },
-  { src: '/src/assets/device1.jpg', label: 'Device1' },
-  { src: '/src/assets/diktel.jpg', label: 'Diktel' },
+  { src: "/src/assets/phone.jpg", label: "Phone" },
+  { src: "/src/assets/device1.jpg", label: "Device1" },
+  { src: "/src/assets/diktel.jpg", label: "Diktel" },
+  { src: "/src/assets/farmdev-tablet.jpg", label: "Device2" },
+  { src: "/src/assets/huawei-tablet.jpg", label: "Device3" },
 ];
 
 const Sidebar: React.FC<SidebarProps> = ({ onDeviceSelect }) => (
@@ -25,11 +27,15 @@ const Sidebar: React.FC<SidebarProps> = ({ onDeviceSelect }) => (
           title={icon.label}
           onClick={() => onDeviceSelect && onDeviceSelect(icon.src)}
         >
-          <img src={icon.src} alt={icon.label} className="w-full h-full object-cover" />
+          <img
+            src={icon.src}
+            alt={icon.label}
+            className="w-full h-full object-cover"
+          />
         </button>
       ))}
     </div>
   </aside>
 );
 
-export default Sidebar; 
+export default Sidebar;

@@ -1,81 +1,90 @@
-import React from "react";
-import PhysicallyButtons from "./PhysicallyButtons";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 
 interface DeviceScreenProps {
+  /** true ise yatay (landscape), false ise dikey (portrait) */
   isRotated: boolean;
-  src?: string;
-  onDeviceTypeChange?: (type: "phone" | "tablet") => void;
+  /** Her boyutta ve herhangi bir kaynaktan gelebilecek cihaz resmi */
+  src: string;
+  onWidthChange?: (width: number) => void;
 }
 
 const DeviceScreen: React.FC<DeviceScreenProps> = ({
   isRotated,
-  src = "/src/assets/diktel.jpg",
-  onDeviceTypeChange,
+  src,
+  onWidthChange,
 }) => {
-  const imgRef = React.useRef<HTMLImageElement>(null);
-  const [deviceType, setDeviceType] = React.useState<"phone" | "tablet">(
-    "phone"
-  );
+  const imgRef = useRef<HTMLImageElement>(null);
+  const wrapperRef = useRef<HTMLDivElement>(null);
 
-  // Görsel yüklendiğinde oranı kontrol et
-  const handleImageLoad = () => {
-    if (imgRef.current) {
-      const img = imgRef.current;
-      const ratio = img.naturalWidth / img.naturalHeight;
-      let type: "phone" | "tablet" = "phone";
-      // Eğer src'de 'diktel' geçiyorsa tablet olarak işaretle
-      if (src && src.toLowerCase().includes("diktel")) {
-        type = "tablet";
-        setDeviceType("tablet");
-      } else if (ratio > 0.9) {
-        type = "tablet";
-        setDeviceType("tablet");
-      } else {
-        type = "phone";
-        setDeviceType("phone");
-      }
-      if (onDeviceTypeChange) {
-        onDeviceTypeChange(type);
-      }
+  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+
+  const MAX_WIDTH = 575;
+  const MAX_HEIGHT = 680;
+
+  // Görüntünün doğal en-boy oranını bozmadan,
+  // pencere ve MAX kısıtlarına göre hesaplar
+  const calculateDimensions = useCallback(() => {
+    const img = imgRef.current;
+    if (!img || !img.naturalWidth || !img.naturalHeight) return;
+
+    const ratio = img.naturalWidth / img.naturalHeight;
+    // portrait için window.innerWidth*0.85, landscape için innerHeight*0.85
+    const rawW = isRotated
+      ? window.innerHeight * 0.85
+      : window.innerWidth * 0.85;
+    const rawH = isRotated
+      ? window.innerWidth * 0.85
+      : window.innerHeight * 0.69;
+
+    const containerW = Math.min(MAX_WIDTH, rawW);
+    const containerH = Math.min(MAX_HEIGHT, rawH);
+
+    const width = Math.min(containerW, containerH * ratio);
+    const height = width / ratio;
+
+    setDimensions({ width, height });
+  }, [isRotated]);
+
+  useEffect(() => {
+    calculateDimensions();
+    window.addEventListener("resize", calculateDimensions);
+    return () => window.removeEventListener("resize", calculateDimensions);
+  }, [calculateDimensions, src, isRotated]);
+
+  useEffect(() => {
+    if (onWidthChange) {
+      onWidthChange(isRotated ? dimensions.height : dimensions.width);
     }
+  }, [dimensions, isRotated, onWidthChange]);
+
+  // Wrapper’da döndürme durumuna göre en-boy takası
+  const wrapperStyle = {
+    width: isRotated ? dimensions.height : dimensions.width,
+    height: isRotated ? dimensions.width : dimensions.height,
   };
-//gelen resimlerin oranlarına göre hesaplatacağız.
 
-  
-
-  // Aspect-ratio'yu cihaz tipine ve rotasyona göre ayarla
-  let aspectRatio;
-  if (deviceType === "tablet") {
-    aspectRatio = isRotated ? "16/9" : "4/3";
-  } else {
-    aspectRatio = isRotated ? "10/9" : "9/16";
-  }
-  //dinamic aspect ratio olacak şekilde revize edilecek.
+  // <img> kendi ölçüsünde çizilir ve merkezden döndürülür
+  const imgStyle = {
+    width: dimensions.width,
+    height: dimensions.height,
+    transform: isRotated ? "rotate(90deg)" : "none",
+    transformOrigin: "center center" as const,
+  };
 
   return (
     <div
-      className={`flex flex-col items-center ${
-        deviceType === "tablet" && isRotated ? "w-full h-full" : "w-auto h-full"
-      }`}
+      ref={wrapperRef}
+      className="flex items-center justify-center overflow-hidden"
+      style={wrapperStyle}
     >
-      {/* rotate ve dik oarlak sınırlandıralabilir. max ve min değerleri değiştirilebilir. 
-      
-      birden fazla cihaz olduğ senaryoda cihazların max ve minle stoplamış olucaz.
-      */}
-      {/* yükseklik genişlik oluyor genişlik ise yükseklik olarka uygulanıyor tablet totate  olunca imgiçerisinde       */}
       <img
         ref={imgRef}
         src={src}
-        alt="Telefon"
-        className={`object-contain rounded-lg transition-transform duration-300 ${
-          deviceType === "tablet" && isRotated
-            ? "h-full w-full item-start  object-fill"
-            : "max-w-full max-h-full"
-        } ${isRotated ? "rotate-90" : ""}`}
-        style={{ aspectRatio }}
-        onLoad={handleImageLoad}
+        alt="Cihaz Ekranı"
+        onLoad={calculateDimensions}
+        className="transition-transform duration-300 object-contain"
+        style={imgStyle}
       />
-      <PhysicallyButtons />
     </div>
   );
 };
