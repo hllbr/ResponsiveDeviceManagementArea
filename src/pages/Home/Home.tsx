@@ -11,6 +11,9 @@ const Home: React.FC = () => {
     "/src/assets/diktel.jpg"
   );
 
+  // Portrait moddayken ölçülen yükseklik
+  const [portraitHeight, setPortraitHeight] = useState<number>(0);
+
   const handleRotate = () => {
     setIsRotated(!isRotated);
   };
@@ -18,26 +21,29 @@ const Home: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-100 grid grid-cols-[auto_1fr]">
       <Sidebar onDeviceSelect={setSelectedDeviceSrc} />
-      {/* Main Area (Header + Content) */}
-      <div className="flex-1 flex flex-col min-w-0">
-        <div className="flex-shrink-0 px-4 lg:px-8 pt-4 lg:pt-8">
+
+      <div className="flex flex-col min-w-0">
+        <div className="px-4 lg:px-8 pt-4 lg:pt-8">
           <DeviceDetails />
         </div>
-        {/* Main Content Row */}
-        <main className="grid grid-cols-1 xl:grid-cols-[auto_1fr] gap-8 px-4 lg:px-8 pb-4 lg:pb-8 flex-1 items-stretch h-full">
-          {/* Sol Panel - DeviceArea */}
-          <div className="flex flex-col h-full min-w-0">
+
+        <main className="grid grid-cols-1 xl:grid-cols-[auto_1fr] gap-8 px-4 lg:px-8 pb-4 lg:pb-8 items-stretch">
+          {/* Sol panel */}
+          <div className="min-w-0">
             <DeviceArea
               isRotated={isRotated}
               onRotate={handleRotate}
               deviceType={deviceType}
               onDeviceTypeChange={setDeviceType}
               src={selectedDeviceSrc}
+              // Portrait mode’daki yüksekliği al
+              onPortraitHeight={(h: number) => setPortraitHeight(h)}
             />
           </div>
-          {/* Sağ Panel - RightPanel */}
-          <div className="hidden md:flex flex-col h-full min-w-0">
-            <RightPanel />
+
+          {/* Sağ panel */}
+          <div className="hidden md:block min-w-0">
+            <RightPanel fixedHeight={portraitHeight} />
           </div>
         </main>
       </div>

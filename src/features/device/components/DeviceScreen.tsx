@@ -34,7 +34,7 @@ const DeviceScreen: React.FC<DeviceScreenProps> = ({
       : window.innerWidth * 0.85;
     const rawH = isRotated
       ? window.innerWidth * 0.85
-      : window.innerHeight * 0.85;
+      : window.innerHeight * 0.69;
 
     const containerW = Math.min(MAX_WIDTH, rawW);
     const containerH = Math.min(MAX_HEIGHT, rawH);

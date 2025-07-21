@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useEffect } from "react";
 import DeviceHeader from "./DeviceHeader";
 import DeviceScreen from "./DeviceScreen";
 import DeviceActionButtonGroup from "./DeviceActionButtonGroup";
@@ -7,9 +7,11 @@ import PhysicallyButtons from "./PhysicallyButtons";
 interface DeviceAreaProps {
   isRotated: boolean;
   onRotate: () => void;
-  src?: string; // cihaz görseli için opsiyonel prop
+  src?: string;
   deviceType: "phone" | "tablet";
   onDeviceTypeChange: (type: "phone" | "tablet") => void;
+  /** Portrait modda ölçülen yüksekliği bildirir */
+  onPortraitHeight?: (height: number) => void;
 }
 
 const DeviceArea: React.FC<DeviceAreaProps> = ({
@@ -18,18 +20,26 @@ const DeviceArea: React.FC<DeviceAreaProps> = ({
   src,
   deviceType,
   onDeviceTypeChange,
+  onPortraitHeight,
 }) => {
-  const screenWrapperRef = useRef<HTMLDivElement>(null);
-  const [screenWidth, setScreenWidth] = useState<number | undefined>(undefined);
+  const wrapperRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (screenWrapperRef.current) {
-      setScreenWidth(screenWrapperRef.current.offsetWidth);
-    }
-  }, [isRotated, src]);
+    const measurePortrait = () => {
+      if (!isRotated && wrapperRef.current && onPortraitHeight) {
+        const h = wrapperRef.current.getBoundingClientRect().height;
+        onPortraitHeight(h);
+      }
+    };
+    // Mount ve src değiştiğinde ölç
+    measurePortrait();
+    // Ekran yeniden boyutlandığında da ölç
+    window.addEventListener("resize", measurePortrait);
+    return () => window.removeEventListener("resize", measurePortrait);
+  }, [isRotated, src, onPortraitHeight]);
 
   return (
-    <section className="h-full ">
+    <section ref={wrapperRef}>
       <div
         className={
           isRotated
@@ -37,7 +47,7 @@ const DeviceArea: React.FC<DeviceAreaProps> = ({
             : "grid grid-rows-[auto_1fr] grid-cols-[auto_auto] gap-y-4 gap-x-2 items-center w-fit max-w-full"
         }
       >
-        {/* Header, her iki modda da üstte ve tam genişlikte */}
+        {/* Header */}
         <div
           className={
             isRotated ? "row-span-1 col-span-1 w-full" : "col-span-2 w-full"
@@ -45,24 +55,20 @@ const DeviceArea: React.FC<DeviceAreaProps> = ({
         >
           <DeviceHeader />
         </div>
-        {/* Ekran ve butonlar: yatayda alt alta, dikeyde yan yana */}
+
+        {/* Screen & Buttons */}
         {isRotated ? (
           <>
             <div className="w-full flex flex-col items-center">
               <DeviceScreen
                 isRotated={isRotated}
                 src={src as string}
-                onWidthChange={setScreenWidth}
+                onWidthChange={() => {}}
               />
-              <div style={{ width: screenWidth }}>
-                <PhysicallyButtons width={screenWidth} />
-              </div>
+              <PhysicallyButtons width={0} />
             </div>
             <div className="w-full flex justify-center">
-              <DeviceActionButtonGroup
-                onRotate={onRotate}
-                isRotated={isRotated}
-              />
+              <DeviceActionButtonGroup onRotate={onRotate} isRotated />
             </div>
           </>
         ) : (
@@ -71,16 +77,11 @@ const DeviceArea: React.FC<DeviceAreaProps> = ({
               <DeviceScreen
                 isRotated={isRotated}
                 src={src as string}
-                onWidthChange={setScreenWidth}
+                onWidthChange={() => {}}
               />
-              <div style={{ width: screenWidth }}>
-                <PhysicallyButtons width={screenWidth} />
-              </div>
+              <PhysicallyButtons width={0} />
             </div>
-            <DeviceActionButtonGroup
-              onRotate={onRotate}
-              isRotated={isRotated}
-            />
+            <DeviceActionButtonGroup onRotate={onRotate} isRotated={false} />
           </>
         )}
       </div>
