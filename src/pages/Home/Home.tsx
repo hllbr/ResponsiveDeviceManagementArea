@@ -19,17 +19,17 @@ const Home: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 grid grid-cols-[auto_1fr]">
+    <div className="h-screen bg-gray-100 grid grid-cols-[auto_1fr]">
       <Sidebar onDeviceSelect={setSelectedDeviceSrc} />
-
-      <div className="flex flex-col min-w-0">
-        <div className="px-4 lg:px-8 pt-4 lg:pt-8">
+      {/* Main Area (Header + Content) */}
+      <div className="flex flex-col min-w-0 h-full flex-1 h-0">
+        <div className="flex-shrink-0 px-4 lg:px-8 pt-4 lg:pt-8">
           <DeviceDetails />
         </div>
-
-        <main className="grid grid-cols-1 xl:grid-cols-[auto_1fr] gap-8 px-4 lg:px-8 pb-4 lg:pb-8 items-stretch">
-          {/* Sol panel */}
-          <div className="min-w-0">
+        {/* Main Content Row */}
+        <main className="grid grid-cols-1 xl:grid-cols-[auto_1fr] gap-8 px-4 lg:px-8 pb-4 lg:pb-8 flex-1 h-0 items-stretch">
+          {/* Sol Panel - DeviceArea */}
+          <div className="flex flex-col h-full min-w-0">
             <DeviceArea
               isRotated={isRotated}
               onRotate={handleRotate}
