@@ -31,12 +31,14 @@ function getCombinations(arr: any[], k: number) {
 const singleCombos = deviceIcons.map((d) => [d]);
 const doubleCombos = getCombinations(deviceIcons, 2);
 const tripleCombos = getCombinations(deviceIcons, 3);
+const quadrupleCombos = getCombinations(deviceIcons, 4);
+const quintupleCombos = getCombinations(deviceIcons, 5);
 
 const Sidebar: React.FC<SidebarProps> = ({
   onDeviceSelect,
   selectedDevices = [],
 }) => {
-  const [openAccordion, setOpenAccordion] = useState<1 | 2 | 3>(1);
+  const [openAccordion, setOpenAccordion] = useState<1 | 2 | 3 | 4 | 5>(1);
 
   const isSelectedCombo = (combo: { src: string }[]) => {
     if (combo.length !== selectedDevices.length) return false;
@@ -138,6 +140,82 @@ const Sidebar: React.FC<SidebarProps> = ({
                 <button
                   key={combo.map((c) => c.src).join("-")}
                   className={`flex items-center justify-center gap-0.5 w-8 h-4 rounded border-2 p-0.5 transition-all shadow-sm ${
+                    isSelectedCombo(combo)
+                      ? "border-blue-800 ring-2 ring-blue-500 bg-blue-100"
+                      : "border-blue-400 hover:border-blue-600 bg-white"
+                  }`}
+                  onClick={() =>
+                    onDeviceSelect && onDeviceSelect(combo.map((c) => c.src))
+                  }
+                >
+                  {combo.map((c) => (
+                    <img
+                      key={c.src}
+                      src={c.src}
+                      alt={c.label}
+                      className="w-2 h-2 object-cover rounded-full"
+                    />
+                  ))}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+        {/* Accordion 4: 4'lü kombinasyonlar */}
+        <div className="w-full">
+          <button
+            className={`w-full flex items-center justify-center font-bold text-blue-700 bg-blue-100 rounded-t-md border border-blue-400 py-1 text-xs focus:outline-none ${
+              openAccordion === 4 ? "" : "opacity-70"
+            }`}
+            onClick={() => setOpenAccordion(4)}
+            aria-expanded={openAccordion === 4}
+          >
+            4
+          </button>
+          {openAccordion === 4 && (
+            <div className="flex flex-col gap-0.5 items-center w-full border border-t-0 border-blue-400 rounded-b-md p-0.5 bg-white">
+              {quadrupleCombos.map((combo) => (
+                <button
+                  key={combo.map((c) => c.src).join("-")}
+                  className={`flex items-center justify-center gap-0.5 w-10 h-4 rounded border-2 p-0.5 transition-all shadow-sm ${
+                    isSelectedCombo(combo)
+                      ? "border-blue-800 ring-2 ring-blue-500 bg-blue-100"
+                      : "border-blue-400 hover:border-blue-600 bg-white"
+                  }`}
+                  onClick={() =>
+                    onDeviceSelect && onDeviceSelect(combo.map((c) => c.src))
+                  }
+                >
+                  {combo.map((c) => (
+                    <img
+                      key={c.src}
+                      src={c.src}
+                      alt={c.label}
+                      className="w-2 h-2 object-cover rounded-full"
+                    />
+                  ))}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+        {/* Accordion 5: 5'li kombinasyonlar */}
+        <div className="w-full">
+          <button
+            className={`w-full flex items-center justify-center font-bold text-blue-700 bg-blue-100 rounded-t-md border border-blue-400 py-1 text-xs focus:outline-none ${
+              openAccordion === 5 ? "" : "opacity-70"
+            }`}
+            onClick={() => setOpenAccordion(5)}
+            aria-expanded={openAccordion === 5}
+          >
+            5
+          </button>
+          {openAccordion === 5 && (
+            <div className="flex flex-col gap-0.5 items-center w-full border border-t-0 border-blue-400 rounded-b-md p-0.5 bg-white">
+              {quintupleCombos.map((combo) => (
+                <button
+                  key={combo.map((c) => c.src).join("-")}
+                  className={`flex items-center justify-center gap-0.5 w-12 h-4 rounded border-2 p-0.5 transition-all shadow-sm ${
                     isSelectedCombo(combo)
                       ? "border-blue-800 ring-2 ring-blue-500 bg-blue-100"
                       : "border-blue-400 hover:border-blue-600 bg-white"

@@ -18,7 +18,7 @@ const Home: React.FC = () => {
   let gridClass = "";
   if (selectedDevices.length === 2) {
     gridClass =
-      "grid md:grid-cols-2 grid-cols-1 gap-8 px-4 lg:px-8 pb-4 lg:pb-8 items-stretch";
+      "grid md:grid-cols-2 grid-cols-1 gap-12 px-4 lg:px-8 pb-4 lg:pb-8 items-stretch";
   }
 
   const handleRotate = (src: string) => {
@@ -60,66 +60,35 @@ const Home: React.FC = () => {
               <RightPanel fixedHeight={portraitHeight} />
             </div>
           </main>
-        ) : selectedDevices.length === 2 ? (
-          // 2 cihaz için responsive grid
-          <main className={gridClass}>
-            {selectedDevices.map((src) => (
-              <DeviceArea
+        ) : selectedDevices.length > 1 ? (
+          <main
+            className={`flex ${
+              selectedDevices.length === 2 ? "justify-between" : ""
+            } ${
+              selectedDevices.length === 3 &&
+              selectedDevices.some((src) => rotatedMap[src])
+                ? "gap-32"
+                : selectedDevices.length === 3
+                ? "justify-between"
+                : "gap-8"
+            } px-4 lg:px-8 pb-4 lg:pb-8 items-stretch overflow-x-auto`}
+            style={{ WebkitOverflowScrolling: "touch" }}
+          >
+            {selectedDevices.map((src, idx) => (
+              <div
                 key={src}
-                isRotated={!!rotatedMap[src]}
-                onRotate={() => handleRotate(src)}
-                deviceType={deviceType}
-                onDeviceTypeChange={setDeviceType}
-                src={src}
-                onPortraitHeight={undefined}
-              />
-            ))}
-          </main>
-        ) : selectedDevices.length === 3 ? (
-          // 3 cihaz için: herhangi biri rotate ise 2+1, yoksa 3 yan yana
-          anyRotated ? (
-            <main className="grid grid-cols-1 md:grid-cols-2 gap-8 px-4 lg:px-8 pb-4 lg:pb-8 items-stretch">
-              {/* Üst sıra */}
-              <div className="md:col-span-1">
+                className={
+                  selectedDevices.length === 2
+                    ? "inline-block min-w-0 w-1/2"
+                    : selectedDevices.length === 3 &&
+                      selectedDevices.some((src) => rotatedMap[src])
+                    ? "inline-block min-w-max"
+                    : selectedDevices.length === 3
+                    ? "inline-block min-w-0 w-1/3"
+                    : "inline-block min-w-max"
+                }
+              >
                 <DeviceArea
-                  key={selectedDevices[0]}
-                  isRotated={!!rotatedMap[selectedDevices[0]]}
-                  onRotate={() => handleRotate(selectedDevices[0])}
-                  deviceType={deviceType}
-                  onDeviceTypeChange={setDeviceType}
-                  src={selectedDevices[0]}
-                  onPortraitHeight={undefined}
-                />
-              </div>
-              <div className="md:col-span-1">
-                <DeviceArea
-                  key={selectedDevices[1]}
-                  isRotated={!!rotatedMap[selectedDevices[1]]}
-                  onRotate={() => handleRotate(selectedDevices[1])}
-                  deviceType={deviceType}
-                  onDeviceTypeChange={setDeviceType}
-                  src={selectedDevices[1]}
-                  onPortraitHeight={undefined}
-                />
-              </div>
-              {/* Alt sıra, sola hizalı */}
-              <div className="md:col-span-1">
-                <DeviceArea
-                  key={selectedDevices[2]}
-                  isRotated={!!rotatedMap[selectedDevices[2]]}
-                  onRotate={() => handleRotate(selectedDevices[2])}
-                  deviceType={deviceType}
-                  onDeviceTypeChange={setDeviceType}
-                  src={selectedDevices[2]}
-                  onPortraitHeight={undefined}
-                />
-              </div>
-            </main>
-          ) : (
-            <main className="grid xl:grid-cols-3 md:grid-cols-3 grid-cols-1 gap-8 px-4 lg:px-8 pb-4 lg:pb-8 items-stretch">
-              {selectedDevices.map((src) => (
-                <DeviceArea
-                  key={src}
                   isRotated={!!rotatedMap[src]}
                   onRotate={() => handleRotate(src)}
                   deviceType={deviceType}
@@ -127,9 +96,9 @@ const Home: React.FC = () => {
                   src={src}
                   onPortraitHeight={undefined}
                 />
-              ))}
-            </main>
-          )
+              </div>
+            ))}
+          </main>
         ) : null}
       </div>
     </div>
