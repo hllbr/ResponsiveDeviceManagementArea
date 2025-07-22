@@ -63,28 +63,34 @@ const Home: React.FC = () => {
         ) : selectedDevices.length > 1 ? (
           <main
             className={`flex ${
-              selectedDevices.length === 2 ? "justify-between" : ""
-            } ${
-              selectedDevices.length === 3 &&
+              selectedDevices.length === 2 &&
               selectedDevices.some((src) => rotatedMap[src])
-                ? "gap-32"
+                ? "gap-24"
+                : selectedDevices.length === 3 &&
+                  selectedDevices.some((src) => rotatedMap[src])
+                ? "gap-20"
+                : selectedDevices.length === 2
+                ? "justify-between gap-12"
                 : selectedDevices.length === 3
-                ? "justify-between"
+                ? "justify-between gap-16"
                 : "gap-8"
             } px-4 lg:px-8 pb-4 lg:pb-8 items-stretch overflow-x-auto`}
             style={{ WebkitOverflowScrolling: "touch" }}
           >
-            {selectedDevices.map((src, idx) => (
+            {selectedDevices.map((src) => (
               <div
                 key={src}
                 className={
-                  selectedDevices.length === 2
-                    ? "inline-block min-w-0 w-1/2"
+                  selectedDevices.length === 2 &&
+                  selectedDevices.some((src) => rotatedMap[src])
+                    ? "inline-block min-w-max"
                     : selectedDevices.length === 3 &&
                       selectedDevices.some((src) => rotatedMap[src])
                     ? "inline-block min-w-max"
+                    : selectedDevices.length === 2
+                    ? "flex-1 basis-1/2 max-w-[50%] min-w-[320px]"
                     : selectedDevices.length === 3
-                    ? "inline-block min-w-0 w-1/3"
+                    ? "flex-1 basis-1/3 max-w-[33.333%] min-w-[320px]"
                     : "inline-block min-w-max"
                 }
               >
