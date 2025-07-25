@@ -25,14 +25,17 @@ const Home: React.FC = () => {
         selectedDevices={selectedDevices}
       />
       <div className="flex flex-col min-w-0">
-        <div className="px-4 lg:px-8 pt-4 lg:pt-8">
+        <div className="px-4 lg:px-8 pt-2">
           <DeviceDetails />
         </div>
 
         {/* Tekli görünüm */}
         {selectedDevices.length === 1 ? (
-          <main className="grid grid-cols-1 xl:grid-cols-[auto_1fr] gap-8 px-4 lg:px-8 pb-4 lg:pb-8 items-stretch">
-            <div className="min-w-0">
+          <main
+            className="flex gap-8 px-4 lg:px-8 pb-4 lg:pb-8 items-stretch overflow-x-auto"
+            style={{ WebkitOverflowScrolling: "touch" }}
+          >
+            <div className="min-w-[375px] flex-shrink-0">
               <DeviceArea
                 isRotated={singleIsRotated}
                 onRotate={() => setSingleIsRotated((r) => !r)}
@@ -42,7 +45,7 @@ const Home: React.FC = () => {
                 onPortraitHeight={(h: number) => setPortraitHeight(h)}
               />
             </div>
-            <div className="hidden md:block min-w-0">
+            <div className="flex-1 min-w-[600px]">
               <RightPanel fixedHeight={portraitHeight} />
             </div>
           </main>
