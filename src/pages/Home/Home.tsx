@@ -32,7 +32,7 @@ const Home: React.FC = () => {
         {/* Tekli görünüm */}
         {selectedDevices.length === 1 ? (
           <main className="grid grid-cols-1 xl:grid-cols-[auto_1fr] gap-8 px-4 lg:px-8 pb-4 lg:pb-8 items-stretch">
-            <div className="min-w-0">
+            <div className="min-w-0 flex justify-center xl:justify-start">
               <DeviceArea
                 isRotated={singleIsRotated}
                 onRotate={() => setSingleIsRotated((r) => !r)}
