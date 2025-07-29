@@ -4,39 +4,22 @@ import DeviceScreen from "./DeviceScreen";
 import DeviceActionButtonGroup from "./DeviceActionButtonGroup";
 import PhysicallyButtons from "./PhysicallyButtons";
 
-interface DeviceAreaProps {
+interface DeviceInstanceProps {
   isRotated: boolean;
   onRotate: () => void;
   src?: string;
   deviceType: "phone" | "tablet";
   onDeviceTypeChange: (type: "phone" | "tablet") => void;
-  /** Portrait modda ölçülen yüksekliği bildirir */
-  onPortraitHeight?: (height: number) => void;
 }
 
-const DeviceArea: React.FC<DeviceAreaProps> = ({
+const DeviceInstance: React.FC<DeviceInstanceProps> = ({
   isRotated,
   onRotate,
   src,
   deviceType,
   onDeviceTypeChange,
-  onPortraitHeight,
 }) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const measurePortrait = () => {
-      if (!isRotated && wrapperRef.current && onPortraitHeight) {
-        const h = wrapperRef.current.getBoundingClientRect().height;
-        onPortraitHeight(h);
-      }
-    };
-    // Mount ve src değiştiğinde ölç
-    measurePortrait();
-    // Ekran yeniden boyutlandığında da ölç
-    window.addEventListener("resize", measurePortrait);
-    return () => window.removeEventListener("resize", measurePortrait);
-  }, [isRotated, src, onPortraitHeight]);
 
   return (
     <section ref={wrapperRef}>
@@ -89,4 +72,4 @@ const DeviceArea: React.FC<DeviceAreaProps> = ({
   );
 };
 
-export default DeviceArea;
+export default DeviceInstance;
