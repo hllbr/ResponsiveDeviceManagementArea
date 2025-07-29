@@ -43,7 +43,7 @@ const Home: React.FC = () => {
                   src={selectedDevices[0]}
                 />
               </div>
-              <div className="hidden md:block  min-w-0 flex items-stretch">
+              <div className="hidden md:block md:h-[82vh] min-w-0 flex items-stretch">
                 {/* md:h-[calc(100vh-11rem)] */}
                 <RightPanel />
               </div>
