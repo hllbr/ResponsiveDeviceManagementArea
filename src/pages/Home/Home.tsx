@@ -33,7 +33,7 @@ const Home: React.FC = () => {
         <div className="flex-1 overflow-y-auto overlfow-x-auto min-h-0">
           {/* Tekli görünüm */}
           {selectedDevices.length === 1 ? (
-            <main className="grid grid-cols-1 xl:grid-cols-[auto_1fr] gap-8 px-4 lg:px-8 pb-4 lg:pb-8 items-stretch">
+            <main className="grid grid-cols-1 xl:grid-cols-[auto_1fr] gap-8 px-4 lg:px-8 pb-4  items-stretch">
               <div className="min-w-0 flex justify-center xl:justify-start">
                 <DeviceInstance
                   isRotated={singleIsRotated}
@@ -43,7 +43,7 @@ const Home: React.FC = () => {
                   src={selectedDevices[0]}
                 />
               </div>
-              <div className="hidden md:block md:h-[82vh] min-w-0 flex items-stretch">
+              <div className="hidden md:block md:h-[88vh] min-w-0 flex items-stretch">
                 {/* md:h-[calc(100vh-11rem)] */}
                 <RightPanel />
               </div>
