@@ -25,7 +25,7 @@ const Home: React.FC = () => {
       />
       <div className="flex flex-col min-w-0 h-screen">
         {/* Sabit DeviceDetails alanı */}
-        <div className="flex-shrink-0 px-4 lg:px-8 pt-4 lg:pt-8">
+        <div className="flex-shrink-0 px-4 lg:px-8 ">
           <ManageDeviceHeader />
         </div>
 
