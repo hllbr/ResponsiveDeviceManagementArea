@@ -1,72 +1,401 @@
 # Responsive Device Management Simulation
 
-<div style="position: fixed; top: 20px; right: 20px; z-index: 1000; background: white; padding: 10px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); border: 1px solid #e0e0e0;">
-  <button id="langToggle" style="background: #007bff; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-size: 14px;">🇹🇷 Türkçe</button>
-</div>
+## 📱 About the Project
 
-<script>
-let currentLang = 'en';
+This project is a React application that simulates screen displays of different device types (phone, tablet) and allows testing various layout scenarios for these devices. The project is specifically developed for developers and designers working in **responsive design** and **device management** fields.
 
-function toggleLanguage() {
-  currentLang = currentLang === 'en' ? 'tr' : 'en';
+## 🎯 Project Purpose
+
+### Why Was This Project Needed?
+
+| Problem | Solution | Benefit |
+|---------|----------|---------|
+| **Real Device Test Cost** | Simulation environment | Cost savings |
+| **Rapid Prototyping** | Dynamic device combinations | Time savings |
+| **Responsive Design Validation** | Different screen sizes | Quality improvement |
+| **User Experience Testing** | Interaction simulation | UX enhancement |
+
+## 🏗️ Technical Architecture
+
+### Technologies Used
+
+| Technology | Version | Purpose |
+|------------|---------|---------|
+| React | 18.2.0 | UI Framework |
+| TypeScript | 5.8.3 | Type Safety |
+| Tailwind CSS | 3.4.4 | Styling |
+| Vite | 5.0.8 | Build Tool |
+| React Router | 7.6.3 | Routing |
+
+### Project Structure
+
+```
+src/
+├── features/
+│   ├── device/
+│   │   ├── components/
+│   │   │   ├── DeviceScreen.tsx      # Screen simulation
+│   │   │   ├── DeviceInstance.tsx    # Device instance
+│   │   │   ├── DeviceHeader.tsx      # Device header
+│   │   │   ├── RightPanel.tsx        # Right panel
+│   │   │   └── PhysicallyButtons.tsx # Physical buttons
+│   │   └── types/
+│   └── sidebar/
+│       └── components/
+│           └── Sidebar.tsx           # Device selection
+├── pages/
+│   └── Home/
+│       └── Home.tsx                  # Main page
+└── assets/                           # Device images
+```
+
+## 🔧 Core Components and Operation
+
+### 1. DeviceScreen Component
+
+This component is the **heart** of the project and is responsible for the correct sizing of device screens.
+
+#### Sizing Algorithm
+
+```typescript
+const calculateDimensions = useCallback(() => {
+  const img = imgRef.current;
+  if (!img || !img.naturalWidth || !img.naturalHeight) return;
+
+  const ratio = img.naturalWidth / img.naturalHeight;
   
-  if (currentLang === 'tr') {
-    // Türkçe içeriği göster
-    document.querySelector('h1').textContent = 'Responsive Device Management Simülasyonu';
-    document.getElementById('langToggle').textContent = '🇺🇸 English';
-    
-    // Ana bölümleri güncelle
-    const sections = document.querySelectorAll('h2');
-    sections.forEach(section => {
-      const text = section.textContent;
-      if (text.includes('Project Overview')) section.textContent = '📱 Proje Hakkında';
-      if (text.includes('Project Purpose')) section.textContent = '🎯 Projenin Amacı';
-      if (text.includes('Technical Architecture')) section.textContent = '🏗️ Teknik Mimari';
-      if (text.includes('Core Components')) section.textContent = '🔧 Temel Bileşenler ve İşleyiş';
-      if (text.includes('Click Detection')) section.textContent = '🎯 Tıklama Algılama ve Koordinat Sistemi';
-      if (text.includes('Responsive Design')) section.textContent = '📊 Responsive Tasarım Stratejileri';
-      if (text.includes('State Management')) section.textContent = '🔄 State Yönetimi';
-      if (text.includes('Tailwind CSS')) section.textContent = '🎨 Tailwind CSS Kullanımı';
-      if (text.includes('Performance')) section.textContent = '🚀 Performans Optimizasyonları';
-      if (text.includes('Future Improvements')) section.textContent = '📈 Gelecek Geliştirmeler';
-      if (text.includes('Installation')) section.textContent = '🛠️ Kurulum ve Çalıştırma';
-      if (text.includes('Contribution')) section.textContent = '📝 Katkıda Bulunma';
-      if (text.includes('License')) section.textContent = '📄 Lisans';
-    });
+  // Raw values based on window dimensions
+  const rawW = isRotated
+    ? window.innerHeight * 0.85    // Landscape: Height-based
+    : window.innerWidth * 0.85;    // Portrait: Width-based
+  const rawH = isRotated
+    ? window.innerWidth * 0.85     // Landscape: Width-based
+    : window.innerHeight * 0.69;   // Portrait: Height-based
+
+  // Maximum constraints
+  const containerW = Math.min(MAX_WIDTH, rawW);
+  const containerH = Math.min(MAX_HEIGHT, rawH);
+
+  // Ratio-preserving calculation
+  const width = Math.min(containerW, containerH * ratio);
+  const height = width / ratio;
+
+  setDimensions({ width, height });
+}, [isRotated]);
+```
+
+#### Sizing Parameters
+
+| Parameter | Value | Description |
+|-----------|-------|-------------|
+| MAX_WIDTH | 575px | Maximum width |
+| MAX_HEIGHT | 680px | Maximum height |
+| Portrait Width | 85% | 85% of window width |
+| Portrait Height | 69% | 69% of window height |
+| Landscape Width | 85% | 85% of window height |
+| Landscape Height | 85% | 85% of window width |
+
+### 2. Rotation System
+
+#### Rotation Logic
+
+```typescript
+// Wrapper dimensions (width-height swap)
+const wrapperStyle = {
+  width: isRotated ? dimensions.height : dimensions.width,
+  height: isRotated ? dimensions.width : dimensions.height,
+};
+
+// Image rotation
+const imgStyle = {
+  width: dimensions.width,
+  height: dimensions.height,
+  transform: isRotated ? "rotate(90deg)" : "none",
+  transformOrigin: "center center",
+};
+```
+
+#### Rotation Scenarios
+
+| State | Wrapper Width | Wrapper Height | Image Rotation |
+|-------|---------------|----------------|----------------|
+| Portrait | dimensions.width | dimensions.height | 0° |
+| Landscape | dimensions.height | dimensions.width | 90° |
+
+### 3. Multi-Device Layout
+
+#### Layout Strategies
+
+| Device Count | Layout | CSS Classes |
+|--------------|--------|-------------|
+| 1 | Single + Right Panel | `grid-cols-1 xl:grid-cols-[auto_1fr]` |
+| 2 | Side by Side | `flex-1 basis-1/2` |
+| 3 | Triple Layout | `flex-1 basis-1/3` |
+| 2+ (Rotated) | Special Spacing | `gap-24` or `gap-20` |
+
+## 🎯 Click Detection and Coordinate System
+
+### ✅ Technical Analysis: Click Detection System WILL WORK PROPERLY
+
+This project is currently **only focused on visual transmission**, but it **will work properly** for detecting the correct location on the clicked screen.
+
+#### 🔧 Strong Points of Current Infrastructure
+
+| Feature | Status | Description |
+|---------|--------|-------------|
+| **Sizing System** | ✅ Ready | Real-time tracking with `dimensions` state |
+| **Rotation Support** | ✅ Ready | Status control with `isRotated` prop |
+| **DOM Access** | ✅ Ready | Direct element access with `imgRef` |
+| **Responsive Design** | ✅ Ready | Automatic updates on window size changes |
+| **State Management** | ✅ Ready | Data management with React state system |
+
+#### 📐 Mathematical Coordinate Transformation
+
+**Mathematical formula required for coordinate transformation**:
+
+```typescript
+const handleClick = (event: React.MouseEvent<HTMLImageElement>) => {
+  const img = imgRef.current;
+  if (!img) return;
+
+  // 1. Mouse position on image
+  const rect = img.getBoundingClientRect();
+  const clickX = event.clientX - rect.left;
+  const clickY = event.clientY - rect.top;
+
+  // 2. Relative coordinates (0-1 range)
+  const relativeX = clickX / dimensions.width;
+  const relativeY = clickY / dimensions.height;
+
+  // 3. Rotation correction
+  let deviceX, deviceY;
+  
+  if (isRotated) {
+    // Coordinate transformation in 90° rotated state
+    deviceX = relativeY;           // Y coordinate becomes X
+    deviceY = 1 - relativeX;      // X coordinate becomes Y (inverted)
   } else {
-    // İngilizce içeriği göster
-    document.querySelector('h1').textContent = 'Responsive Device Management Simulation';
-    document.getElementById('langToggle').textContent = '🇹🇷 Türkçe';
-    
-    // Ana bölümleri güncelle
-    const sections = document.querySelectorAll('h2');
-    sections.forEach(section => {
-      const text = section.textContent;
-      if (text.includes('Proje Hakkında')) section.textContent = '📱 Project Overview';
-      if (text.includes('Projenin Amacı')) section.textContent = '🎯 Project Purpose';
-      if (text.includes('Teknik Mimari')) section.textContent = '🏗️ Technical Architecture';
-      if (text.includes('Temel Bileşenler')) section.textContent = '🔧 Core Components and Operation';
-      if (text.includes('Tıklama Algılama')) section.textContent = '🎯 Click Detection and Coordinate System';
-      if (text.includes('Responsive Tasarım')) section.textContent = '📊 Responsive Design Strategies';
-      if (text.includes('State Yönetimi')) section.textContent = '🔄 State Management';
-      if (text.includes('Tailwind CSS')) section.textContent = '🎨 Tailwind CSS Usage';
-      if (text.includes('Performans')) section.textContent = '🚀 Performance Optimizations';
-      if (text.includes('Gelecek Geliştirmeler')) section.textContent = '📈 Future Improvements';
-      if (text.includes('Kurulum')) section.textContent = '🛠️ Installation and Running';
-      if (text.includes('Katkıda Bulunma')) section.textContent = '📝 Contribution';
-      if (text.includes('Lisans')) section.textContent = '📄 License';
-    });
+    deviceX = relativeX;
+    deviceY = relativeY;
   }
+
+  return { deviceX, deviceY, relativeX, relativeY };
+};
+```
+
+#### ⚡ Minimum Required Additions
+
+| Missing Component | Required Addition | Status |
+|------------------|-------------------|--------|
+| Click Event Handler | `onClick={handleClick}` | ❌ Missing |
+| Coordinate Transformation Function | `handleClick` function | ❌ Missing |
+
+```typescript
+// Add to DeviceScreenProps
+interface DeviceScreenProps {
+  // ... existing props
+  onScreenClick?: (coordinates: {
+    deviceX: number;
+    deviceY: number;
+    relativeX: number;
+    relativeY: number;
+  }) => void;
 }
 
-document.getElementById('langToggle').addEventListener('click', toggleLanguage);
-</script>
+// Add to img element
+<img
+  // ... existing props
+  onClick={handleClick}
+  className="transition-transform duration-300 object-contain cursor-pointer"
+/>
+```
 
-## 📱 Project Overview
+#### 🎯 Conclusion
+
+**YES, the current project is technically set up to work properly for click detection system.** You just need to mathematically handle the necessary coordinate calculation event and add it, and it will work properly in your own project.
+
+## 📊 Responsive Design Strategies
+
+### Breakpoint System
+
+| Breakpoint | Width | Usage Area |
+|------------|-------|------------|
+| xs | < 640px | Mobile devices |
+| sm | 640px+ | Small tablets |
+| md | 768px+ | Tablets |
+| lg | 1024px+ | Large tablets |
+| xl | 1280px+ | Desktop |
+| 2xl | 1536px+ | Wide screens |
+
+### Dynamic Sizing
+
+```typescript
+// Dynamic calculation based on window size
+const calculateResponsiveDimensions = () => {
+  const viewportWidth = window.innerWidth;
+  const viewportHeight = window.innerHeight;
+  
+  // Different ratios for different screen sizes
+  const ratios = {
+    mobile: { width: 0.95, height: 0.6 },
+    tablet: { width: 0.85, height: 0.69 },
+    desktop: { width: 0.75, height: 0.8 }
+  };
+  
+  // Ratio selection based on screen size
+  const currentRatio = viewportWidth < 768 ? ratios.mobile :
+                      viewportWidth < 1024 ? ratios.tablet :
+                      ratios.desktop;
+  
+  return {
+    width: viewportWidth * currentRatio.width,
+    height: viewportHeight * currentRatio.height
+  };
+};
+```
+
+## 🔄 State Management
+
+### Main State Structure
+
+```typescript
+interface AppState {
+  deviceType: "phone" | "tablet";
+  selectedDevices: string[];
+  rotatedMap: { [src: string]: boolean };
+  singleIsRotated: boolean;
+}
+```
+
+### State Update Strategies
+
+| State | Update Method | Usage Area |
+|-------|---------------|------------|
+| deviceType | setDeviceType | Device type change |
+| selectedDevices | setSelectedDevices | Device selection |
+| rotatedMap | setRotatedMap | Multi-device rotation |
+| singleIsRotated | setSingleIsRotated | Single device rotation |
+
+## 🎨 Tailwind CSS Usage
+
+### Custom Grid System
+
+```css
+/* Dynamic grid structures */
+.grid-rows-[auto_1fr_auto]     /* Rotated layout */
+.grid-cols-[auto_1fr]          /* Single device layout */
+.grid-cols-[auto_auto]         /* Default layout */
+```
+
+### Responsive Utility Classes
+
+```css
+/* Breakpoint-based visibility */
+.hidden md:block               /* Hidden on mobile, visible on tablet+ */
+.flex-1 basis-1/2             /* Equal width for 2 devices */
+.flex-1 basis-1/3             /* Equal width for 3 devices */
+```
+
+## 🚀 Performance Optimizations
+
+### 1. useCallback Usage
+```typescript
+const calculateDimensions = useCallback(() => {
+  // Size calculation logic
+}, [isRotated]); // Recalculate only when isRotated changes
+```
+
+### 2. useEffect Optimization
+```typescript
+useEffect(() => {
+  calculateDimensions();
+  window.addEventListener("resize", calculateDimensions);
+  return () => window.removeEventListener("resize", calculateDimensions);
+}, [calculateDimensions, src, isRotated]);
+```
+
+### 3. Conditional Rendering
+```typescript
+{selectedDevices.length === 1 ? (
+  <SingleDeviceLayout />
+) : selectedDevices.length > 1 ? (
+  <MultiDeviceLayout />
+) : null}
+```
+
+## 📈 Future Improvements
+
+### Planned Features
+
+| Feature | Description | Priority |
+|---------|-------------|----------|
+| **Gesture Support** | Support for touch gestures | High |
+| **Device Physical Properties** | Real device size and weight simulation | Medium |
+| **Network Simulation** | Testing at different connection speeds | Medium |
+| **Automated Test Scenarios** | Automatic testing of specific user scenarios | Low |
+| **Export Feature** | Export of test results | Low |
+
+### Technical Improvements
+
+| Improvement | Description | Benefit |
+|-------------|-------------|---------|
+| **Web Workers** | Background thread usage for heavy calculations | Performance |
+| **Virtual Scrolling** | Performance optimization for many devices | Performance |
+| **Service Worker** | Offline operation support | Usability |
+| **PWA Support** | Progressive Web App features | Usability |
+
+## 🛠️ Installation and Running
+
+### Requirements
+- Node.js 16+
+- npm or yarn
+
+### Installation
+```bash
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+
+# Production build
+npm run build
+
+# Lint check
+npm run lint
+```
+
+### Running
+```bash
+npm run dev
+```
+The application will run at `http://localhost:5173`.
+
+## 📝 Contributing
+
+1. Fork the project
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Create a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License.
+
+---
+
+**Note**: This project is developed for educational and testing purposes for developers working in responsive design and device management fields. It does not replace real device tests, but is a valuable tool for rapid prototyping and pre-testing.
+
+---
+
+# Responsive Device Management Simülasyonu
+
+## 📱 Proje Hakkında
 
 Bu proje, farklı cihaz türlerinin (telefon, tablet) ekran görüntülerini simüle eden ve bu cihazların farklı yerleşim senaryolarını test etmeye olanak sağlayan bir React uygulamasıdır. Proje, özellikle **responsive tasarım** ve **cihaz yönetimi** alanlarında çalışan geliştiriciler ve tasarımcılar için geliştirilmiştir.
 
-## 🎯 Project Purpose
+## 🎯 Projenin Amacı
 
 ### Neden Bu Projeye İhtiyaç Duyuldu?
 
@@ -77,7 +406,7 @@ Bu proje, farklı cihaz türlerinin (telefon, tablet) ekran görüntülerini sim
 | **Responsive Tasarım Doğrulama** | Farklı ekran boyutları | Kalite artışı |
 | **Kullanıcı Deneyimi Testi** | Etkileşim simülasyonu | UX iyileştirme |
 
-## 🏗️ Technical Architecture
+## 🏗️ Teknik Mimari
 
 ### Kullanılan Teknolojiler
 
